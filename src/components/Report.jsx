@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import map from "../assets/body-map.png";
-// import { addInjury } from "./API";
+import { addInjury } from "./API";
 
 export default function Report() {
+  let navigate = useNavigate();
+
   //manage state for injury
   let [injury, setInjury] = useState({
     name: "",
@@ -102,12 +105,28 @@ export default function Report() {
   }
 
   //handle add injury
-  function addInjury() {
+  function handleSubmit() {
+    let fullDate = new Date();
+
+    let date = fullDate.getDate();
+    let month = fullDate.getMonth() + 1;
+    let year = fullDate.getFullYear();
+
+    let reportDate = year + "-" + month + "-" + date;
+
+    let hours = fullDate.getHours();
+    let minutes = fullDate.getMinutes();
+
+    let reportTime = hours + ":" + minutes;
+
     setInjury((prevState) => ({
       ...prevState,
       circles: circles,
       details: details,
+      reportDate: reportDate,
+      reportTime: reportTime,
     }));
+
     setSubmit((prevState) => !prevState);
   }
 
@@ -124,8 +143,10 @@ export default function Report() {
     });
 
   //handle upload
-  function uploadInjury() {
-    console.log(injury);
+  function handleUpload() {
+    addInjury(injury)
+      .then((response) => response.json())
+      .then((result) => result.message === "OK" && navigate("/"));
   }
 
   return (
@@ -149,7 +170,7 @@ export default function Report() {
           >
             Edit
           </button>
-          <button className="upload" onClick={uploadInjury}>
+          <button className="upload" onClick={handleUpload}>
             Upload
           </button>
         </div>
@@ -183,7 +204,7 @@ export default function Report() {
             />
           </label>
           {inputMap}
-          <input className="submit" type="submit" onClick={addInjury} />
+          <input className="submit" type="submit" onClick={handleSubmit} />
         </div>
       )}
     </div>
