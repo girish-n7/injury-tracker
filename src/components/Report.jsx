@@ -14,6 +14,9 @@ export default function Report() {
     details: [],
   });
 
+  //manage state for submit
+  let [submit, setSubmit] = useState(false);
+
   //manage state for details
   let [details, setDetails] = useState([]);
 
@@ -86,8 +89,16 @@ export default function Report() {
   //handle details change
   function detailsChange(event) {
     const { name, value } = event.target;
-    let newDetail = { name: name, details: value };
-    setDetails((prevState) => [...prevState, newDetail]);
+    let newDetail = { id: name, details: value }; //create new obj to insert
+
+    let objIndex = details.findIndex((obj) => obj.id == name); //find the obj if exists with the given id
+
+    //if the obj already exists, if yes then edit it else insert a new obj
+    details.some((obj) => obj.id == name)
+      ? //update existing obj
+        (details[objIndex].details = value)
+      : //insert new obj
+        setDetails((prevState) => [...prevState, newDetail]);
   }
 
   //handle add injury
@@ -97,6 +108,23 @@ export default function Report() {
       circles: circles,
       details: details,
     }));
+    setSubmit((prevState) => !prevState);
+  }
+
+  //map the final injury details from injury object
+  let detailsMap =
+    submit &&
+    injury.details.map((item) => {
+      return (
+        <div className="details--final" key={item.id}>
+          <p>Injury {item.id}</p>
+          <p>{item.details}</p>
+        </div>
+      );
+    });
+
+  //handle upload
+  function uploadInjury() {
     console.log(injury);
   }
 
@@ -109,37 +137,55 @@ export default function Report() {
       >
         {circlesMap}
       </div>
-      <div className="details--container">
-        <label>
-          Name of reporter:{" "}
-          <input
-            name="name"
-            type="text"
-            value={injury.name}
-            onChange={inputChange}
-          />
-        </label>
-        <label>
-          Date of injury:{" "}
-          <input
-            name="injuryDate"
-            type="date"
-            value={injury.injuryDate}
-            onChange={inputChange}
-          />
-        </label>
-        <label>
-          Time of injury:{" "}
-          <input
-            name="injuryTime"
-            type="time"
-            value={injury.injuryTime}
-            onChange={inputChange}
-          />
-        </label>
-        {inputMap}
-        <input className="submit" type="submit" onClick={addInjury} />
-      </div>
+      {submit ? (
+        <div className="details--container">
+          <p>Name of the reporter: {injury.name}</p>
+          <p>Date of injury: {injury.injuryDate}</p>
+          <p>Time of injury: {injury.injuryTime}</p>
+          {detailsMap}
+          <button
+            className="edit"
+            onClick={() => setSubmit((prevState) => !prevState)}
+          >
+            Edit
+          </button>
+          <button className="upload" onClick={uploadInjury}>
+            Upload
+          </button>
+        </div>
+      ) : (
+        <div className="details--container">
+          <label>
+            Name of the reporter:{" "}
+            <input
+              name="name"
+              type="text"
+              value={injury.name}
+              onChange={inputChange}
+            />
+          </label>
+          <label>
+            Date of injury:{" "}
+            <input
+              name="injuryDate"
+              type="date"
+              value={injury.injuryDate}
+              onChange={inputChange}
+            />
+          </label>
+          <label>
+            Time of injury:{" "}
+            <input
+              name="injuryTime"
+              type="time"
+              value={injury.injuryTime}
+              onChange={inputChange}
+            />
+          </label>
+          {inputMap}
+          <input className="submit" type="submit" onClick={addInjury} />
+        </div>
+      )}
     </div>
   );
 }
