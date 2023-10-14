@@ -12,11 +12,5 @@ export default function Home() {
       .catch((err) => console.error(err));
   }, []);
 
-  return (
-    result && (
-      <div className="home--container">
-        {result.name}, {result.date}
-      </div>
-    )
-  );
+  return result && <div className="home--container">{result.name}</div>;
 }

@@ -1,19 +1,34 @@
 import { useState } from "react";
 import map from "../assets/body-map.png";
+// import { addInjury } from "./API";
 
 export default function Report() {
-  //manage state for injury count
+  //manage state for injury
+  let [injury, setInjury] = useState({
+    name: "",
+    injuryTime: "",
+    reportTime: "",
+    injuryDate: "",
+    reportDate: "",
+    circles: [],
+    details: [],
+  });
+
+  //manage state for details
+  let [details, setDetails] = useState([]);
+
+  //manage state for circle count
   const [circles, setCircles] = useState([]);
 
-  const getClickCoords = (event) => {
+  function getClickCoords(event) {
     var e = event.target;
     var dim = e.getBoundingClientRect();
     var x = event.clientX - dim.left;
     var y = event.clientY - dim.top;
     return [x, y];
-  };
+  }
 
-  const addCircle = (event) => {
+  function addCircle(event) {
     // get click coordinates
     let [x, y] = getClickCoords(event);
 
@@ -25,7 +40,7 @@ export default function Report() {
 
     // update 'circles'
     setCircles(allCircles);
-  };
+  }
 
   //create circlesMap
   let circlesMap = circles?.map((item) => {
@@ -48,10 +63,42 @@ export default function Report() {
   let inputMap = circles.map((item) => {
     return (
       <label key={item.id}>
-        Details for injury {item.id}: <textarea name="injuryTime" />
+        Details for injury {item.id}:{" "}
+        <textarea
+          name={`${item.id}`}
+          type="text"
+          value={details[item - 1]?.details}
+          onChange={detailsChange}
+        />
       </label>
     );
   });
+
+  //handle input change
+  function inputChange(event) {
+    const { name, value } = event.target;
+    setInjury((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  }
+
+  //handle details change
+  function detailsChange(event) {
+    const { name, value } = event.target;
+    let newDetail = { name: name, details: value };
+    setDetails((prevState) => [...prevState, newDetail]);
+  }
+
+  //handle add injury
+  function addInjury() {
+    setInjury((prevState) => ({
+      ...prevState,
+      circles: circles,
+      details: details,
+    }));
+    console.log(injury);
+  }
 
   return (
     <div className="report--container">
@@ -64,15 +111,34 @@ export default function Report() {
       </div>
       <div className="details--container">
         <label>
-          Name of reporter: <input name="reporterName" />
+          Name of reporter:{" "}
+          <input
+            name="name"
+            type="text"
+            value={injury.name}
+            onChange={inputChange}
+          />
         </label>
         <label>
-          Date of injury: <input name="injuryDate" />
+          Date of injury:{" "}
+          <input
+            name="injuryDate"
+            type="date"
+            value={injury.injuryDate}
+            onChange={inputChange}
+          />
         </label>
         <label>
-          Time of injury: <input name="injuryTime" />
+          Time of injury:{" "}
+          <input
+            name="injuryTime"
+            type="time"
+            value={injury.injuryTime}
+            onChange={inputChange}
+          />
         </label>
         {inputMap}
+        <input className="submit" type="submit" onClick={addInjury} />
       </div>
     </div>
   );
