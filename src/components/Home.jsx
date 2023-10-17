@@ -14,7 +14,7 @@ export default function Home() {
   }, []);
 
   //map the results into cards
-  let resultMap = result?.map((item) => {
+  let cardMap = result?.map((item) => {
     //only map the array when array length !=0 by using arr?.map
     return (
       <HomeCard
@@ -33,7 +33,7 @@ export default function Home() {
     result && (
       <div className="home--container">
         <div></div>
-        <div className="home--cards">{resultMap}</div>
+        <div className="home--cards">{cardMap}</div>
       </div>
     )
   );

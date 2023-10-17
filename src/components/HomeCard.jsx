@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 
 import { useNavigate } from "react-router-dom";
+import { deleteInjury } from "./API";
 
 export default function HomeCard({
   id,
@@ -12,12 +13,22 @@ export default function HomeCard({
 }) {
   let navigate = useNavigate();
 
+  //handle injury edit
   function handleEdit() {
     console.log("Edit" + id);
   }
 
+  //handle injury deletion
   function handleDelete() {
-    console.log("Delete" + id);
+    deleteInjury(id)
+      .then((response) => response.json())
+      .then(
+        (result) =>
+          result.message === "OK" && alert("Item deleted!")
+            ? null
+            : location.reload() //reload page after user clicks OK, to re-fetch from api
+      )
+      .catch((err) => console.error(err));
   }
 
   return (
