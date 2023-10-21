@@ -6,6 +6,7 @@ export default function Home() {
   //manage state for result
   let [result, setResult] = useState(null);
 
+  //fetch all injuries
   useEffect(() => {
     fetchAll()
       .then((response) => response.json())

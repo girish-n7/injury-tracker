@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getById } from "./API";
 import map from "../assets/body-map.png";
 
-export default function Report() {
+export default function View() {
   let navigate = useNavigate();
 
   //get id from route parameters

@@ -24,7 +24,7 @@ export default function Report() {
   let [details, setDetails] = useState([]);
 
   //manage state for circle count
-  const [circles, setCircles] = useState([]);
+  let [circles, setCircles] = useState([]);
 
   function getClickCoords(event) {
     var e = event.target;
