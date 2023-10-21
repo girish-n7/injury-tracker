@@ -69,7 +69,7 @@ export default function Report() {
         <textarea
           name={`${item.id}`}
           type="text"
-          placeholder={`${item.details}`}
+          placeholder="Enter details here"
           value={item.details}
           onChange={detailsChange}
         />
@@ -129,8 +129,8 @@ export default function Report() {
     injury.circles.map((item) => {
       return (
         <div className="details--final" key={item.id}>
-          <p>Injury {item.id}</p>
-          <p>{item.details}</p>
+          <p className="details--final__head">Injury {item.id}</p>
+          <p className="details--final__body">{item.details}</p>
         </div>
       );
     });
@@ -153,9 +153,9 @@ export default function Report() {
       </div>
       {submit ? (
         <div className="details--container">
-          <p>Name of the reporter: {injury.name}</p>
-          <p>Date of injury: {injury.injuryDate}</p>
-          <p>Time of injury: {injury.injuryTime}</p>
+          <p className="detail--name">Name of the reporter: {injury.name}</p>
+          <p className="detail--date">Date of injury: {injury.injuryDate}</p>
+          <p className="detail--time">Time of injury: {injury.injuryTime}</p>
           {detailsMap}
           <button
             className="edit"
@@ -174,6 +174,7 @@ export default function Report() {
             <input
               name="name"
               type="text"
+              placeholder="First name Last name"
               value={injury.name}
               onChange={inputChange}
             />
@@ -197,7 +198,9 @@ export default function Report() {
             />
           </label>
           {inputMap}
-          <input className="submit" type="submit" onClick={handleSubmit} />
+          <button className="submit" onClick={handleSubmit}>
+            Submit
+          </button>
         </div>
       )}
     </div>

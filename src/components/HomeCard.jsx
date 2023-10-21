@@ -2,6 +2,9 @@
 
 import { useNavigate } from "react-router-dom";
 import { deleteInjury } from "./API";
+import viewIcon from "../assets/view.svg";
+import editIcon from "../assets/edit.svg";
+import deleteIcon from "../assets/delete.svg";
 
 export default function HomeCard({
   id,
@@ -27,7 +30,7 @@ export default function HomeCard({
   }
 
   return (
-    <div className="card--border">
+    <div className="card--border" onClick={() => navigate(`/view/${id}`)}>
       <div className="card--left">
         <p className="card--title">Reported by: {name}</p>
         <p className="injury--date">Injury date: {injuryDate}</p>
@@ -37,15 +40,24 @@ export default function HomeCard({
         </p>
       </div>
       <div className="card--buttons">
-        <button className="card--btn" onClick={() => navigate(`/view/${id}`)}>
-          View
-        </button>
-        <button className="card--btn" onClick={() => navigate(`/edit/${id}`)}>
-          Edit
-        </button>
-        <button className="card--btn" onClick={handleDelete}>
-          Delete
-        </button>
+        <img
+          className="card--icon"
+          src={viewIcon}
+          onClick={() => navigate(`/view/${id}`)}
+          alt="view"
+        ></img>
+        <img
+          className="card--icon"
+          src={editIcon}
+          onClick={() => navigate(`/edit/${id}`)}
+          alt="edit"
+        ></img>
+        <img
+          className="card--icon"
+          src={deleteIcon}
+          onClick={handleDelete}
+          alt="delete"
+        ></img>
       </div>
     </div>
   );

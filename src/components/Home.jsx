@@ -73,8 +73,8 @@ export default function Home() {
   return (
     result && (
       <div className="home--container">
-        <Search />
         <div className="home--head">
+          <Search />
           <Filter filter={filter} updateFilter={updateFilter} />
           <Sort updateSort={updateSort} />
         </div>

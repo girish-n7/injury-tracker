@@ -41,8 +41,8 @@ export default function View() {
   let detailsMap = injury?.circles.map((item) => {
     return (
       <div className="details--final" key={item.id}>
-        <p>Injury {item.id}</p>
-        <p>{item.details}</p>
+        <p className="details--final__head">Injury {item.id}</p>
+        <p className="details--final__body">{item.details}</p>
       </div>
     );
   });
@@ -57,9 +57,9 @@ export default function View() {
           {circlesMap}
         </div>
         <div className="details--container">
-          <p>Name of the reporter: {injury.name}</p>
-          <p>Date of injury: {injury.injuryDate}</p>
-          <p>Time of injury: {injury.injuryTime}</p>
+          <p className="detail--name">Name of the reporter: {injury.name}</p>
+          <p className="detail--date">Date of injury: {injury.injuryDate}</p>
+          <p className="detail--time">Time of injury: {injury.injuryTime}</p>
           {detailsMap}
           <button className="edit" onClick={() => navigate(`/edit/${id}`)}>
             Edit
