@@ -10,7 +10,7 @@ export default function View() {
   let { id } = useParams();
 
   //manage state for injury
-  let [injury, setInjury] = useState();
+  let [injury, setInjury] = useState(null);
 
   //call backend api to get required injury using id
   useEffect(() => {
@@ -38,7 +38,7 @@ export default function View() {
   });
 
   //   map the final injury details from injury object
-  let detailsMap = injury?.details.map((item) => {
+  let detailsMap = injury?.circles.map((item) => {
     return (
       <div className="details--final" key={item.id}>
         <p>Injury {item.id}</p>

@@ -13,11 +13,6 @@ export default function HomeCard({
 }) {
   let navigate = useNavigate();
 
-  //handle injury edit
-  function handleEdit() {
-    console.log("Edit" + id);
-  }
-
   //handle injury deletion
   function handleDelete() {
     deleteInjury(id)
@@ -45,7 +40,7 @@ export default function HomeCard({
         <button className="card--btn" onClick={() => navigate(`/view/${id}`)}>
           View
         </button>
-        <button className="card--btn" onClick={handleEdit}>
+        <button className="card--btn" onClick={() => navigate(`/edit/${id}`)}>
           Edit
         </button>
         <button className="card--btn" onClick={handleDelete}>

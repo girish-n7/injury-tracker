@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import map from "../assets/body-map.png";
-import { getById } from "./API";
+import { getById, updateInjury } from "./API";
 
 export default function Report() {
   let navigate = useNavigate();
@@ -10,13 +10,10 @@ export default function Report() {
   let { id } = useParams();
 
   //manage state for injury
-  let [injury, setInjury] = useState(null);
+  let [injury, setInjury] = useState({});
 
   //manage state for submit
   let [submit, setSubmit] = useState(false);
-
-  //manage state for details
-  let [details, setDetails] = useState([]);
 
   //manage state for circle count
   let [circles, setCircles] = useState([]);
@@ -27,7 +24,6 @@ export default function Report() {
       .then((response) => response.json())
       .then((result) => {
         setInjury(result);
-        setDetails(result.details);
         setCircles(result.circles);
       })
       .catch((err) => console.error(err));
@@ -46,7 +42,7 @@ export default function Report() {
     let [x, y] = getClickCoords(event);
 
     // make new svg circle element
-    let newCircle = { id: circles.length + 1, x: x, y: y };
+    let newCircle = { id: circles.length + 1, x: x, y: y, details: "" };
 
     // update the array of circles
     let allCircles = [...circles, newCircle];
@@ -73,15 +69,15 @@ export default function Report() {
   });
 
   //create map for inputs
-  let inputMap = circles?.map((item) => {
+  let inputMap = circles.map((item) => {
     return (
       <label key={item.id}>
-        Details for injury {item.id}:{" "}
+        Injury {item.id}:{" "}
         <textarea
           name={`${item.id}`}
           type="text"
-          placeholder={`${injury.details[item - 1]?.details}`}
-          value={details[item - 1]?.details}
+          placeholder={`${item.details}`}
+          value={item.details}
           onChange={detailsChange}
         />
       </label>
@@ -100,24 +96,35 @@ export default function Report() {
   //handle details change
   function detailsChange(event) {
     const { name, value } = event.target;
-    let newDetail = { id: name, details: value }; //create new obj to insert
 
-    let objIndex = details.findIndex((obj) => obj.id == name); //find the obj if exists with the given id
+    //update details in obj
+    let newArr = [...circles]; // copying the old circles array
 
-    //if the obj already exists, if yes then edit it else insert a new obj
-    details.some((obj) => obj.id == name)
-      ? //update existing obj
-        (details[objIndex].details = value)
-      : //insert new obj
-        setDetails((prevState) => [...prevState, newDetail]);
+    newArr[name - 1].details = value;
+
+    setCircles(newArr);
   }
 
   //handle add injury
   function handleSubmit() {
+    let fullDate = new Date();
+
+    let date = fullDate.getDate();
+    let month = fullDate.getMonth() + 1;
+    let year = fullDate.getFullYear();
+
+    let reportDate = year + "-" + month + "-" + date;
+
+    let hours = fullDate.getHours();
+    let minutes = fullDate.getMinutes();
+
+    let reportTime = hours + ":" + minutes;
+
     setInjury((prevState) => ({
       ...prevState,
       circles: circles,
-      details: details,
+      reportDate: reportDate,
+      reportTime: reportTime,
     }));
 
     setSubmit((prevState) => !prevState);
@@ -126,7 +133,7 @@ export default function Report() {
   //map the final injury details from injury object
   let detailsMap =
     submit &&
-    injury.details.map((item) => {
+    injury.circles.map((item) => {
       return (
         <div className="details--final" key={item.id}>
           <p>Injury {item.id}</p>
@@ -137,7 +144,10 @@ export default function Report() {
 
   //handle upload
   function handleUpload() {
-    console.log(injury);
+    updateInjury(id, injury)
+      .then((response) => response.json())
+      .then((result) => result.message === "OK" && navigate("/"))
+      .catch((err) => console.error(err));
   }
 
   return (
@@ -166,39 +176,37 @@ export default function Report() {
           </button>
         </div>
       ) : (
-        injury && (
-          <div className="details--container">
-            <label>
-              Name of the reporter:{" "}
-              <input
-                name="name"
-                type="text"
-                value={injury.name}
-                onChange={inputChange}
-              />
-            </label>
-            <label>
-              Date of injury:{" "}
-              <input
-                name="injuryDate"
-                type="date"
-                value={injury.injuryDate}
-                onChange={inputChange}
-              />
-            </label>
-            <label>
-              Time of injury:{" "}
-              <input
-                name="injuryTime"
-                type="time"
-                value={injury.injuryTime}
-                onChange={inputChange}
-              />
-            </label>
-            {inputMap}
-            <input className="submit" type="submit" onClick={handleSubmit} />
-          </div>
-        )
+        <div className="details--container">
+          <label>
+            Name of the reporter:{" "}
+            <input
+              name="name"
+              type="text"
+              value={injury.name}
+              onChange={inputChange}
+            />
+          </label>
+          <label>
+            Date of injury:{" "}
+            <input
+              name="injuryDate"
+              type="date"
+              value={injury.injuryDate}
+              onChange={inputChange}
+            />
+          </label>
+          <label>
+            Time of injury:{" "}
+            <input
+              name="injuryTime"
+              type="time"
+              value={injury.injuryTime}
+              onChange={inputChange}
+            />
+          </label>
+          {inputMap}
+          <input className="submit" type="submit" onClick={handleSubmit} />
+        </div>
       )}
     </div>
   );
