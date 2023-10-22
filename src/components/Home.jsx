@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import HomeCard from "./HomeCard";
-import Search from "./Search";
 import Sort from "./Sort";
 import Filter from "./Filter";
 import { fetchAll } from "./API";
@@ -22,6 +21,9 @@ export default function Home() {
 
   //manage state for sort
   let [sort, setSort] = useState(null);
+
+  //manage stat for search query
+  let [query, setQuery] = useState("");
 
   //handle filter update
   function updateFilter(item) {
@@ -55,26 +57,42 @@ export default function Home() {
     });
 
   //map the result into cards
-  let cardMap = filterRes?.map((item) => {
-    //only map the array when array length !=0 by using arr?.map
-    return (
-      <HomeCard
-        key={item._id}
-        id={item._id}
-        name={item.name}
-        injuryTime={item.injuryTime}
-        injuryDate={item.injuryDate}
-        reportTime={item.reportTime}
-        reportDate={item.reportDate}
-      />
-    );
-  });
+  let cardMap = filterRes
+    ?.filter((item) => {
+      //filter the array based on search query
+      if (query === "") {
+        //if query is empty
+        return item;
+      } else if (item.name.toLowerCase().includes(query.toLowerCase())) {
+        //returns filtered array
+        return item;
+      }
+    })
+    ?.map((item) => {
+      //only map the array when array length !=0 by using arr?.map
+      return (
+        <HomeCard
+          key={item._id}
+          id={item._id}
+          name={item.name}
+          injuryTime={item.injuryTime}
+          injuryDate={item.injuryDate}
+          reportTime={item.reportTime}
+          reportDate={item.reportDate}
+        />
+      );
+    });
 
   return (
     result && (
       <div className="home--container">
         <div className="home--head">
-          <Search />
+          <input
+            className="home--search"
+            placeholder="Enter the name to search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          ></input>
           <Filter filter={filter} updateFilter={updateFilter} />
           <Sort updateSort={updateSort} />
         </div>
