@@ -17,8 +17,7 @@ export default function HomeCard({
   let navigate = useNavigate();
 
   //handle injury deletion
-  function handleDelete(e) {
-    e.stopPropagation();
+  function handleDelete() {
     deleteInjury(id)
       .then((response) => response.json())
       .then(
@@ -31,7 +30,7 @@ export default function HomeCard({
   }
 
   return (
-    <div className="card--border" onClick={() => navigate(`/view/${id}`)}>
+    <div className="card--border">
       <div className="card--left">
         <p className="card--title">Reported by: {name}</p>
         <p className="injury--date">Injury date: {injuryDate}</p>
@@ -44,19 +43,13 @@ export default function HomeCard({
         <img
           className="card--icon"
           src={viewIcon}
-          onClick={(e) => {
-            e.stopPropagation();
-            navigate(`/view/${id}`);
-          }}
+          onClick={() => navigate(`/view/${id}`)}
           alt="view"
         ></img>
         <img
           className="card--icon"
           src={editIcon}
-          onClick={(e) => {
-            e.stopPropagation();
-            navigate(`/edit/${id}`);
-          }}
+          onClick={() => navigate(`/edit/${id}`)}
           alt="edit"
         ></img>
         <img
