@@ -6,7 +6,7 @@ import PageLoader from "./PageLoader";
 export function AuthenticationGuard({ component }) {
   const Component = withAuthenticationRequired(component, {
     onRedirecting: () => (
-      <div className="page-layout">
+      <div className="page--layout">
         <PageLoader />
       </div>
     ),

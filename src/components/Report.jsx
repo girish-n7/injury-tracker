@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import map from "../assets/body-map.png";
+import deleteIcon from "../assets/delete.svg";
 import { addInjury } from "./API";
 
 export default function Report() {
@@ -64,18 +65,34 @@ export default function Report() {
   //create map for inputs
   let inputMap = circles.map((item) => {
     return (
-      <label key={item.id}>
-        Injury {item.id}:{" "}
-        <textarea
-          name={`${item.id}`}
-          type="text"
-          placeholder="Enter details here"
-          value={item.details}
-          onChange={detailsChange}
-        />
-      </label>
+      <div key={item.id} className="textarea--container">
+        <label>
+          Injury {item.id}:{" "}
+          <textarea
+            name={`${item.id}`}
+            type="text"
+            placeholder="Enter details here"
+            value={item.details}
+            onChange={detailsChange}
+          />
+        </label>
+        {item.id === circles.length && (
+          <img
+            className="card--icon"
+            src={deleteIcon}
+            onClick={handleDelete}
+            alt="delete"
+          ></img>
+        )}
+      </div>
     );
   });
+
+  //handle input delete
+  function handleDelete() {
+    let newArr = circles.filter((item) => item.id != circles.length);
+    setCircles(newArr);
+  }
 
   //handle input change
   function inputChange(event) {
