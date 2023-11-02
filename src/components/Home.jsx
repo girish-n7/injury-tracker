@@ -17,7 +17,11 @@ export default function Home() {
   }, []);
 
   //manage state for filter
-  let [filter, setFilter] = useState("all");
+  let [filter, setFilter] = useState({
+    filterType: "injury",
+    startDate: "",
+    endDate: "",
+  });
 
   //manage state for sort
   let [sort, setSort] = useState(null);
@@ -26,8 +30,12 @@ export default function Home() {
   let [query, setQuery] = useState("");
 
   //handle filter update
-  function updateFilter(item) {
-    setFilter(item);
+  function updateFilter(e) {
+    let { name, value } = e.target;
+    setFilter((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   }
 
   //handle sort update
@@ -36,7 +44,17 @@ export default function Home() {
   }
 
   //filter result
-  let filterRes = result;
+
+  let filterRes =
+    filter.startDate && filter.endDate
+      ? result?.filter(
+          (item) =>
+            Date.parse(item.reportDate + "T" + item.reportTime) >=
+              Date.parse(filter.startDate) &&
+            Date.parse(item.reportDate + "T" + item.reportTime) <=
+              Date.parse(filter.endDate)
+        )
+      : result;
 
   //sort result
 
