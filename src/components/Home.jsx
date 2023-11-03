@@ -47,15 +47,24 @@ export default function Home() {
 
   let filterRes =
     filter.startDate && filter.endDate
-      ? result?.filter(
-          (item) =>
-            Date.parse(item.reportDate + "T" + item.reportTime) >=
-              Date.parse(filter.startDate) &&
-            Date.parse(item.reportDate + "T" + item.reportTime) <=
-              Date.parse(filter.endDate)
-        )
+      ? filter.filterType === "injury"
+        ? result?.filter(
+            (item) =>
+              Date.parse(item.injuryDate + "T" + item.injuryTime) >=
+                Date.parse(filter.startDate) &&
+              Date.parse(item.injuryDate + "T" + item.injuryTime) <=
+                Date.parse(filter.endDate)
+          )
+        : result?.filter(
+            (item) =>
+              Date.parse(item.reportDate + "T" + item.reportTime) >=
+                Date.parse(filter.startDate) &&
+              Date.parse(item.reportDate + "T" + item.reportTime) <=
+                Date.parse(filter.endDate)
+          )
       : result;
 
+  console.log(filter);
   //sort result
 
   filterRes && //conditionally render sort after fetching data
