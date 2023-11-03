@@ -66,10 +66,11 @@ export default function Report() {
   let inputMap = circles.map((item) => {
     return (
       <div key={item.id} className="textarea--container">
-        <label>
+        <label className="input--label">
           Injury {item.id}:{" "}
           <textarea
             name={`${item.id}`}
+            className="details--textarea"
             type="text"
             placeholder="Enter details here"
             value={item.details}
@@ -186,29 +187,32 @@ export default function Report() {
         </div>
       ) : (
         <div className="details--container">
-          <label>
+          <label className="input--label">
             Name of the reporter:{" "}
             <input
               name="name"
+              className="details--input"
               type="text"
               placeholder="First name Last name"
               value={injury.name}
               onChange={inputChange}
             />
           </label>
-          <label>
+          <label className="input--label">
             Date of injury:{" "}
             <input
               name="injuryDate"
+              className="details--input"
               type="date"
               value={injury.injuryDate}
               onChange={inputChange}
             />
           </label>
-          <label>
+          <label className="input--label">
             Time of injury:{" "}
             <input
               name="injuryTime"
+              className="details--input"
               type="time"
               value={injury.injuryTime}
               onChange={inputChange}

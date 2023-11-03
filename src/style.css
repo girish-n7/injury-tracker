@@ -80,10 +80,18 @@ header {
 
 .home--search {
   font-size: 1rem;
-  width: 60%;
+  width: 40%;
   border-radius: 3rem;
   margin: 20px 0;
   padding: 12px 16px;
+  border: none;
+  outline: 1px solid grey;
+  transition: 0.2s;
+}
+
+.home--search:focus {
+  outline: 1px solid var(--primary);
+  transition: 0.2s;
 }
 
 /* sort */
@@ -99,7 +107,7 @@ header {
   justify-content: space-between;
   padding: 5px 15px;
   border-radius: 3rem;
-  outline: 1px solid var(--text);
+  outline: 1px solid var(--primary);
 }
 
 .sort--div {
@@ -107,7 +115,7 @@ header {
   position: absolute;
   top: 40px;
   background-color: var(--background);
-  outline: 1px solid var(--text);
+  outline: 1px solid var(--primary);
   border-radius: 5px;
   overflow: hidden;
   z-index: 5;
@@ -195,14 +203,14 @@ header {
   align-items: center;
 }
 
-label {
+.input--label {
   display: flex;
   flex-direction: column;
   margin: 5px 0;
 }
 
-input,
-textarea {
+.details--input,
+.details--textarea {
   width: 260px;
   margin: 5px 10px;
   border-radius: 4px;
@@ -211,9 +219,9 @@ textarea {
   padding: 8px 12px;
 }
 
-input:focus,
-textarea:focus {
-  outline: 2px solid grey;
+.details--input:focus,
+.details--textarea:focus {
+  outline: 2px solid var(--primary);
 }
 
 .submit,
@@ -281,7 +289,7 @@ textarea:focus {
 }
 
 .card--border:hover {
-  outline: 1px solid grey;
+  outline: 1px solid var(--primary);
   box-shadow: 0 0 2px 1px grey;
   transition: 0.2s;
 }
@@ -296,7 +304,7 @@ textarea:focus {
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  border-left: 1px solid grey;
+  border-left: 1px solid var(--primary);
   z-index: 3;
 }
 
@@ -324,4 +332,58 @@ textarea:focus {
 .card--icon:hover {
   margin-left: 8px;
   transition: 0.2s;
+}
+
+/* filter */
+
+.filter--container {
+  display: flex;
+  flex-direction: column;
+  margin: 5px 8px;
+}
+
+.filter--radio {
+  display: flex;
+  justify-content: space-around;
+  margin: 10px 0;
+}
+
+.radio--btn {
+  appearance: none;
+
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+
+  border: 2px solid #999;
+  transition: 0.2s all linear;
+  margin: 0 5px;
+
+  position: relative;
+  top: 4px;
+}
+
+.radio--btn:checked {
+  border: 6px solid var(--primary);
+}
+
+.filter--dates__container {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px 10px;
+  gap: 10px;
+}
+
+.label--date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.filter--date {
+  border-radius: 3rem;
+  padding: 8px 12px;
+  border: none;
+  outline: 1px solid var(--primary);
 }
