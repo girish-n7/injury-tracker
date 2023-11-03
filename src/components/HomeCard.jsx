@@ -45,18 +45,21 @@ export default function HomeCard({
           src={viewIcon}
           onClick={() => navigate(`/view/${id}`)}
           alt="view"
+          title="View injury report"
         ></img>
         <img
           className="card--icon"
           src={editIcon}
           onClick={() => navigate(`/edit/${id}`)}
           alt="edit"
+          title="Edit injury report"
         ></img>
         <img
           className="card--icon"
           src={deleteIcon}
           onClick={handleDelete}
           alt="delete"
+          title="Delete injury report"
         ></img>
       </div>
     </div>

@@ -7,6 +7,7 @@
 
 html {
   scroll-behavior: smooth;
+  scrollbar-gutter: stable;
 }
 
 body {
@@ -22,11 +23,19 @@ body {
   font-family: "IBM Plex Sans", sans-serif;
 }
 
+a {
+  text-decoration: none;
+}
+
 button {
   font-size: 0.8rem;
   font-weight: 700;
   border-radius: 5rem;
   cursor: pointer;
+}
+
+li {
+  margin: 5px 0;
 }
 
 .loader {
@@ -56,12 +65,22 @@ header {
 
 .nav--container {
   display: flex;
+  align-items: center;
 }
 
 .nav--element {
   font-size: 1rem;
   margin-left: 30px;
   cursor: pointer;
+}
+
+.contact {
+  font-size: 0.9rem;
+  border-radius: 5rem;
+  border: none;
+  background-color: var(--primary);
+  color: var(--background);
+  padding: 5px 12px;
 }
 
 /* home */
@@ -92,6 +111,29 @@ header {
 .home--search:focus {
   outline: 1px solid var(--primary);
   transition: 0.2s;
+}
+
+.info--container {
+  margin: 10px auto;
+}
+
+.injured--person {
+  height: 150px;
+  float: left;
+  margin: 5px 40px 5px 0;
+}
+
+.info--content {
+  line-height: 150%;
+}
+
+.view--more {
+  width: fit-content;
+  background-color: var(--primary);
+  color: var(--background);
+  margin: 8px auto 10px auto;
+  padding: 8px 16px;
+  border: none;
 }
 
 /* sort */
@@ -394,5 +436,4 @@ header {
   margin: 8px auto 10px auto;
   padding: 8px 24px;
   border: none;
-  border-radius: 3rem;
 }

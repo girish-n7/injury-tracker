@@ -38,6 +38,12 @@ export default function Navbar({ navArr }) {
           <LogoutButton />
         </>
       )}
+      <a
+        className="nav--element contact"
+        href="https://github.com/girish-n7/portfolio_v2"
+      >
+        Contact
+      </a>
     </div>
   );
 }

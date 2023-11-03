@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import HomeCard from "./HomeCard";
+import HomeInfo from "./HomeInfo";
 import Sort from "./Sort";
 import Filter from "./Filter";
 import { fetchAll } from "./API";
@@ -63,8 +64,6 @@ export default function Home() {
                 Date.parse(filter.endDate)
           )
       : result;
-
-  console.log(filter);
   //sort result
 
   filterRes && //conditionally render sort after fetching data
@@ -117,6 +116,7 @@ export default function Home() {
           <input
             className="home--search"
             placeholder="Enter the name to search"
+            title="Search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           ></input>
@@ -131,6 +131,7 @@ export default function Home() {
             </button>
           </p>
         )}
+        <HomeInfo />
         <div className="home--cards">{cardMap}</div>
       </div>
     )
