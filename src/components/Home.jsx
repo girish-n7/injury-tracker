@@ -18,11 +18,12 @@ export default function Home() {
   }, []);
 
   //manage state for filter
-  let [filter, setFilter] = useState({
+  let filterDefault = {
     filterType: "injury",
     startDate: "",
     endDate: "",
-  });
+  };
+  let [filter, setFilter] = useState(filterDefault);
 
   //manage state for sort
   let [sort, setSort] = useState(null);
@@ -37,6 +38,11 @@ export default function Home() {
       ...prevState,
       [name]: value,
     }));
+  }
+
+  //clear filter
+  function clearFilter() {
+    setFilter(filterDefault);
   }
 
   //handle sort update
@@ -69,10 +75,10 @@ export default function Home() {
   filterRes && //conditionally render sort after fetching data
     sort && //conditionally render sort function if sorting method is selected
     filterRes.sort((a, b) => {
-      return sort === "Injured date: Newest first"
+      return sort === "Injury date: Newest first"
         ? Date.parse(b.injuryDate + "T" + b.injuryTime) -
             Date.parse(a.injuryDate + "T" + a.injuryTime)
-        : sort === "Injured date: Oldest first"
+        : sort === "Injury date: Oldest first"
         ? Date.parse(a.injuryDate + "T" + a.injuryTime) -
           Date.parse(b.injuryDate + "T" + b.injuryTime)
         : sort === "Reported date: Oldest first"
@@ -110,7 +116,7 @@ export default function Home() {
     });
 
   return (
-    result && (
+    filterRes && (
       <div className="home--container">
         <div className="home--head">
           <input
@@ -120,7 +126,11 @@ export default function Home() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           ></input>
-          <Filter filter={filter} updateFilter={updateFilter} />
+          <Filter
+            filter={filter}
+            updateFilter={updateFilter}
+            clearFilter={clearFilter}
+          />
           <Sort updateSort={updateSort} />
         </div>
         {sort && (
@@ -132,7 +142,34 @@ export default function Home() {
           </p>
         )}
         <HomeInfo />
-        <div className="home--cards">{cardMap}</div>
+        <p
+          className="card--title"
+          style={{ textTransform: "uppercase", marginTop: "20px" }}
+        >
+          Injuries reported:
+        </p>
+        <hr
+          style={{
+            margin: "10px auto",
+            border: "none",
+            borderBottom: "1px solid var(--primary)",
+          }}
+        />
+
+        {filterRes.length != 0 ? (
+          <div className="home--cards">{cardMap} </div>
+        ) : (
+          <p
+            style={{
+              fontSize: "1rem",
+              color: "grey",
+              textAlign: "center",
+              margin: "30px 0",
+            }}
+          >
+            No data matches your filter range!
+          </p>
+        )}
       </div>
     )
   );

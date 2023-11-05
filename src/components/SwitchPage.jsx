@@ -4,6 +4,7 @@ import Home from "./Home";
 import Report from "./Report";
 import View from "./View";
 import Edit from "./Edit";
+import Error from "./Error";
 
 export default function SwitchPage() {
   return (
@@ -24,6 +25,7 @@ export default function SwitchPage() {
         path="/edit/:id"
         element={<AuthenticationGuard component={Edit} />}
       />
+      <Route path="*" element={<Error />} />
     </Routes>
   );
 }

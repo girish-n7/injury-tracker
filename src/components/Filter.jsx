@@ -3,7 +3,7 @@
 import { useState } from "react";
 import arrow from "../assets/up.svg";
 
-export default function Filter({ filter, updateFilter }) {
+export default function Filter({ filter, updateFilter, clearFilter }) {
   //manage state for filter div
   let [filterDiv, setFilterDiv] = useState(false);
 
@@ -85,16 +85,27 @@ export default function Filter({ filter, updateFilter }) {
               />
             </label>
           </div>
-          <button
-            className="filter--apply"
-            onClick={() => {
-              let item = { target: { name: "filterType", value: radio } };
-              inputChange(item);
-              setFilterDiv((prevState) => !prevState);
-            }}
-          >
-            Apply
-          </button>
+          <div className="filter--btn">
+            <button
+              className="filter--apply"
+              onClick={() => {
+                let item = { target: { name: "filterType", value: radio } };
+                inputChange(item);
+                setFilterDiv((prevState) => !prevState);
+              }}
+            >
+              Apply
+            </button>
+            <button
+              className="filter--clear"
+              onClick={() => {
+                setFilterDiv((prevState) => !prevState);
+                clearFilter();
+              }}
+            >
+              Clear
+            </button>
+          </div>
         </div>
       )}
     </div>

@@ -9,8 +9,8 @@ export default function Sort({ updateSort }) {
 
   //create array for sort
   let sortArr = [
-    "Injured date: Newest first",
-    "Injured date: Oldest first",
+    "Injury date: Newest first",
+    "Injury date: Oldest first",
     "Reported date: Newest first",
     "Reported date: Oldest first",
   ];

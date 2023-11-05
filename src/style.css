@@ -86,8 +86,8 @@ header {
 /* home */
 
 .home--container {
-  width: 90%;
-  margin: 15px auto;
+  width: 85%;
+  margin: 15px auto 80px auto;
   padding: 8px 12px;
 }
 
@@ -120,7 +120,7 @@ header {
 .injured--person {
   height: 150px;
   float: left;
-  margin: 5px 40px 5px 0;
+  margin: 5px 60px 10px 0;
 }
 
 .info--content {
@@ -429,11 +429,38 @@ header {
   outline: 1px solid var(--primary);
 }
 
-.filter--apply {
+.filter--btn {
+  display: flex;
+}
+
+.filter--apply,
+.filter--clear {
   width: fit-content;
   background-color: var(--primary);
   color: var(--background);
-  margin: 8px auto 10px auto;
+  margin: 8px auto 15px auto;
   padding: 8px 24px;
   border: none;
+}
+
+.filter--clear {
+  background-color: #d61f1f;
+}
+
+/* error */
+
+.error--container {
+  width: fit-content;
+  height: 50vh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.error--content {
+  text-transform: uppercase;
+  color: #d61f1f;
+  font-size: 1.4rem;
 }
